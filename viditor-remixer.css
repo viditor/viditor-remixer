@@ -5,19 +5,9 @@
 
 html
 {
+	color: #222;
 	font-size: 16px;
 	font-family: Ubuntu, sans-serif;
-}
-
-#video
-{
-	top: 0rem;
-	left: 12rem;
-	right: 12rem;
-	bottom: 8rem;
-	position: fixed;
-	
-	background-color: #222;
 }
 
 #assets
@@ -29,15 +19,15 @@ html
 	position: fixed;
 	overflow-y: scroll;
 	
-	background-color: #0A9BDE;
+	background-color: #EEE;
+	background-image: URL("images/paper.png");
 }
 
 #assets > b
 {
 	display: block;
 	padding-top: 0.75rem;
-	
-	color: #FFF;	
+		
 	font-size: 2rem;
 	font-weight: bold;
 	text-align: center;
@@ -56,7 +46,18 @@ html
 	margin: 0.75rem 0rem;
 	
 	cursor: pointer;
-	border-radius: 0.5rem;
+	border-radius: 0.2rem;
+}
+
+#video
+{
+	top: 0rem;
+	left: 12rem;
+	right: 12rem;
+	bottom: 8rem;
+	position: fixed;
+	
+	background-color: #222;
 }
 
 #video > video
@@ -72,3 +73,34 @@ html
 	position: absolute;
 }
 
+#editor
+{
+	left: 0rem;
+	right: 0rem;
+	bottom: 0rem;
+	height: 8rem;
+	position: fixed;
+	overflow: hidden;
+	overflow-x: scroll;
+	
+	background-color: #EEE;
+	background-image: URL("images/paper.png");	
+}
+
+#editor > .track
+{
+	width: 100rem;
+	height: 6.5rem;
+	padding: 0.22rem;
+}
+
+#editor > .track > .video-instance
+{
+	
+	width: 7rem;
+	height: 6.5rem;
+	display: inline-block;
+	
+	border-radius: 0.2rem;
+	background-color: #222;
+}
