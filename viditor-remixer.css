@@ -10,7 +10,13 @@ html
 	font-family: Ubuntu, sans-serif;
 }
 
-#assets
+body
+{
+	background-color: #EEE;
+	background-image: URL("resources/paper.png");
+}
+
+#insert
 {
 	top: 0rem;
 	right: 0rem;
@@ -18,12 +24,9 @@ html
 	bottom: 8rem;
 	position: fixed;
 	overflow-y: scroll;
-	
-	background-color: #EEE;
-	background-image: URL("images/paper.png");
 }
 
-#assets > b
+#insert > b
 {
 	display: block;
 	padding-top: 0.75rem;
@@ -33,13 +36,13 @@ html
 	text-align: center;
 }
 
-#assets > #list
+#insert > #list
 {
 	overflow: auto;
 	padding: 0rem 0.75rem;
 }
 
-#assets > #list > .video-asset
+#insert > #list > .insertable-video
 {
 	width: 100%;
 	display: block;
@@ -49,7 +52,7 @@ html
 	border-radius: 0.2rem;
 }
 
-#video
+#view
 {
 	top: 0rem;
 	left: 12rem;
@@ -60,7 +63,7 @@ html
 	background-color: #222;
 }
 
-#video > video
+#view > video
 {
 	width: 100%;
 	height: 100%;
@@ -73,7 +76,7 @@ html
 	position: absolute;
 }
 
-#editor
+#edit
 {
 	left: 0rem;
 	right: 0rem;
@@ -82,19 +85,16 @@ html
 	position: fixed;
 	overflow: hidden;
 	overflow-x: scroll;
-	
-	background-color: #EEE;
-	background-image: URL("images/paper.png");	
 }
 
-#editor > .track
+#edit > .track
 {
 	width: 100rem;
 	height: 6.5rem;
 	padding: 0.22rem;
 }
 
-#editor > .track > .video-instance
+#edit > .track > .editable-video
 {
 	
 	width: 7rem;

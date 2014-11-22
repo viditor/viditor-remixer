@@ -1,4 +1,5 @@
-Videos = new Meteor.Collection("videos");
+InsertableVideos = new Meteor.Collection("insertable-videos");
+EditableVideos = new Meteor.Collection("editable-videos");
 Cursors = new Meteor.Collection("cursors");
 
 if(Meteor.isClient)
@@ -34,18 +35,23 @@ if(Meteor.isClient)
 		});
 	});
 	
-	Template.assets.videos = function()
+	Template.insert.videos = function()
 	{
-		return Videos.find({});
+		return InsertableVideos.find({});
 	}
 	
-	Template.assets.events =
+	Template.insert.events =
 	{
-		"click .video-asset": function()
+		"click .insertable-video": function()
 		{
 			var my_cursor_id = Session.get("my cursor id");
 			Cursors.update(my_cursor_id, {$set: {video: this.filehandle}});
 		}
+	}
+	
+	Template.edit.videos = function()
+	{
+		return EditableVideos.find({});
 	}
 }
 
@@ -53,9 +59,12 @@ if(Meteor.isServer)
 {
 	Meteor.startup(function()
 	{
-		Videos.remove({});
-		Videos.insert({filehandle: "01"});
-		Videos.insert({filehandle: "02"});
+		InsertableVideos.remove({});
+		InsertableVideos.insert({filehandle: "01"});
+		InsertableVideos.insert({filehandle: "02"});
+		
+		EditableVideos.remove({});
+		EditableVideos.insert({filehandle: "01"});
 		
 		Cursors.remove({});
 	});

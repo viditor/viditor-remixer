@@ -4,24 +4,24 @@
 </head>
 
 <body>
-	{{> assets}}
-	{{> video}}
-	{{> editor}}
+	{{> insert}}
+	{{> view}}
+	{{> edit}}
 </body>
 
-<template name="assets">
-	<section id="assets">
-		<b>Assets!</b>
+<template name="insert">
+	<section id="insert">
+		<b>Videos!</b>
 		<div id="list">
 			{{#each videos}}
-				<img class="video-asset" src="video.{{filehandle}}.png"/>
+				<img class="insertable-video" src="video.{{filehandle}}.png"/>
 			{{/each}}
 		</div>
 	</section>
 </template>
 
-<template name="video">
-	<section id="video">
+<template name="view">
+	<section id="view">
 		<video controls>
 			<source id="mp4" type="video/mp4; codecs=avc1.42E01E,mp4a.40.2">
 			<source id="webm" type="video/webm; codecs=vp8,vorbis">
@@ -30,24 +30,12 @@
 	</section>
 </template>
 
-<template name="editor">
-	<section id="editor">
+<template name="edit">
+	<section id="edit">
 		<div class="track">
-			<div class="video-instance"></div>
-			<div class="video-instance"></div>
-			<div class="video-instance"></div>
-			<div class="video-instance"></div>
-			<div class="video-instance"></div>
-			<div class="video-instance"></div>
-			<div class="video-instance"></div>
-			<div class="video-instance"></div>
-			<div class="video-instance"></div>
-			<div class="video-instance"></div>
-			<div class="video-instance"></div>
-			<div class="video-instance"></div>
-			<div class="video-instance"></div>
-			<div class="video-instance"></div>
-			<div class="video-instance"></div>
+			{{#each videos}}
+				<div class="editable-video"></div>
+			{{/each}}
 		</div>
 	</section>
 </template>
