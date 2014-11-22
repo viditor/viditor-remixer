@@ -11,8 +11,11 @@
 
 <template name="insert">
 	<section id="insert">
-		<b>Videos!</b>
-		<div id="list">
+		<div class="info">
+			<b>Videos!</b>
+			<small>doubleclick to insert!</small>
+		</div>
+		<div class="list">
 			{{#each videos}}
 				<img class="insertable-video" src="{{thumbnail}}"/>
 			{{/each}}

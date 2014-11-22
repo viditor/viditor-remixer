@@ -29,15 +29,15 @@ if(Meteor.isClient)
 		
 		$(document).ready(function()
 		{
-			$("video").on("ended", function()
+			$("video").on("ended", function(event)
 			{
 				var my_cursor_id = Session.get("my cursor id");
 				var my_cursor = Cursors.findOne(my_cursor_id);
 				
 				if(my_cursor && my_cursor.video)
 				{
-					var next_index = my_cursor.video.index + 1;
-					var next_video = EditableVideos.findOne({index: next_index});
+					var video = my_cursor.video;
+					var next_video = EditableVideos.findOne({index: {$gt: video.index}}, {sort: {index: 0}});
 					Cursors.update(my_cursor_id, {$set: {video: next_video || null}});
 				}
 			});
@@ -57,16 +57,18 @@ if(Meteor.isClient)
 	
 	Template.insert.events =
 	{
-		"click .insertable-video": function(event)
+		"dblclick .insertable-video": function(event)
 		{
+			var new_video = EditableVideos.insert({handle: this.handle, index: Date.now()});
+			
 			var my_cursor_id = Session.get("my cursor id");
-			Cursors.update(my_cursor_id, {$set: {video: this}});
+			Cursors.update(my_cursor_id, {$set: {video: new_video}});
 		}
 	}
 	
 	Template.edit.videos = function()
 	{
-		return EditableVideos.find({});
+		return EditableVideos.find({}, {sort: {index: 0}});
 	}
 	
 	Template.edit.thumbnail = function()
@@ -99,6 +101,23 @@ if(Meteor.isClient)
 			
 			var my_cursor_id = Session.get("my cursor id");
 			Cursors.update(my_cursor_id, {$set: {video: this}});
+			
+			console.log(this.index);
+		},
+		
+		"dblclick .editable-video": function(event)
+		{
+			event.stopPropagation();
+			
+			var my_cursor_id = Session.get("my cursor id");
+			var my_cursor = Cursors.findOne(my_cursor_id);
+			
+			if(my_cursor && my_cursor.video)
+			{
+				var null_video = my_cursor.video;
+				EditableVideos.remove(null_video._id);
+				Cursors.update(my_cursor_id, {$set: {video: null}});
+			}
 		},
 		
 		"click .track": function(event)
@@ -118,8 +137,9 @@ if(Meteor.isServer)
 		InsertableVideos.insert({handle: "02"});
 		
 		EditableVideos.remove({});
-		EditableVideos.insert({handle: "01", index: 0});
-		EditableVideos.insert({handle: "02", index: 1});
+		EditableVideos.insert({handle: "01", index: Date.now()});
+		EditableVideos.insert({handle: "02", index: Date.now()+1});
+		EditableVideos.insert({handle: "02", index: Date.now()+2});
 		
 		Cursors.remove({});
 	});

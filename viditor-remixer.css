@@ -31,23 +31,29 @@ body
 	*/
 }
 
-#insert > b
+#insert > .info
 {
 	display: block;
 	padding-top: 0.75rem;
-		
-	font-size: 2rem;
-	font-weight: bold;
+	
+	color: #0A9BDE;
+	color: orange;
 	text-align: center;
 }
 
-#insert > #list
+#insert > .info > b
+{
+	font-size: 2rem;
+	font-weight: bold;
+}
+
+#insert > .list
 {
 	overflow: auto;
 	padding: 0rem 0.75rem;
 }
 
-#insert > #list > .insertable-video
+#insert > .list > .insertable-video
 {
 	width: 100%;
 	display: block;
