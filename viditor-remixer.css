@@ -24,6 +24,11 @@ body
 	bottom: 8rem;
 	position: fixed;
 	overflow-y: scroll;
+	
+	/*
+	color: #FFF;
+	background-color: #222;
+	*/
 }
 
 #insert > b
@@ -97,10 +102,13 @@ body
 #edit > .track > .editable-video
 {
 	
-	width: 7rem;
+	width: 6.5rem;
 	height: 6.5rem;
 	display: inline-block;
 	
+	cursor: pointer;
 	border-radius: 0.2rem;
 	background-color: #222;
+	background-size: cover;
+	background-position: center;
 }

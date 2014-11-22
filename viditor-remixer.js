@@ -14,24 +14,18 @@ if(Meteor.isClient)
 			var my_cursor_id = Session.get("my cursor id");
 			var my_cursor = Cursors.findOne(my_cursor_id);
 			
+			var video = "assets/video.blank";
+			
 			if(my_cursor.video)
 			{
-				console.log(my_cursor.video);
-				var video = my_cursor.video;
-				
-				$("video").find("source#mp4").attr("src", "video." + video + ".mp4");
-				$("video").find("source#webm").attr("src", "video." + video + ".webm");
-				$("video").find("source#ogv").attr("src", "video." + video + ".ogv");
-				
-				$("video").get(0).load();
+				video = "assets/video." + my_cursor.video;
 			}
-			else
-			{
-				$("video").find("source#mp4").attr("src", "");
-				$("video").find("source#webm").attr("src", "");
-				$("video").find("source#ogv").attr("src", "");
-				$("video").get(0).load();
-			}
+			
+			$("video").find("source#mp4").attr("src", video + ".mp4");
+			$("video").find("source#webm").attr("src", video + ".webm");
+			$("video").find("source#ogv").attr("src", video + ".ogv");
+			
+			$("video").get(0).load();
 		});
 	});
 	
@@ -42,7 +36,7 @@ if(Meteor.isClient)
 	
 	Template.insert.events =
 	{
-		"click .insertable-video": function()
+		"click .insertable-video": function(event)
 		{
 			var my_cursor_id = Session.get("my cursor id");
 			Cursors.update(my_cursor_id, {$set: {video: this.filehandle}});
@@ -52,6 +46,29 @@ if(Meteor.isClient)
 	Template.edit.videos = function()
 	{
 		return EditableVideos.find({});
+	}
+	
+	Template.edit.thumbnail = function()
+	{
+		var filehandle = this.filehandle;
+		return "background-image: url(video." + filehandle + ".png);"
+	}
+	
+	Template.edit.events =
+	{
+		"click .editable-video": function(event)
+		{
+			event.stopPropagation();
+			
+			var my_cursor_id = Session.get("my cursor id");
+			Cursors.update(my_cursor_id, {$set: {video: this.filehandle}});
+		},
+		
+		"click .track": function(event)
+		{
+			var my_cursor_id = Session.get("my cursor id");
+			Cursors.update(my_cursor_id, {$set: {video: null}});
+		}
 	}
 }
 
@@ -65,6 +82,7 @@ if(Meteor.isServer)
 		
 		EditableVideos.remove({});
 		EditableVideos.insert({filehandle: "01"});
+		EditableVideos.insert({filehandle: "02"});
 		
 		Cursors.remove({});
 	});
