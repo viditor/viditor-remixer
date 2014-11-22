@@ -1,20 +1,25 @@
 Videos = new Meteor.Collection("videos");
+Cursors = new Meteor.Collection("cursors");
 
 if(Meteor.isClient)
 {
 	Meteor.startup(function()
 	{
-		Session.set("filehandle", "01");
-		
-		var video_id = "01";
+		var cursor_id = Cursors.insert({video: "01"});
+		Session.set("my cursor id", cursor_id);
 		
 		Deps.autorun(function()
 		{
-			var filehandle = Session.get("filehandle");
+			var my_cursor_id = Session.get("my cursor id");
+			var my_cursor = Cursors.findOne(my_cursor_id);
 			
-			$("video").find("source#mp4").attr("src", "video." + filehandle + ".mp4");
-			$("video").find("source#webm").attr("src", "video." + filehandle + ".webm");
-			$("video").find("source#ogv").attr("src", "video." + filehandle + ".ogv");
+			console.log(my_cursor);
+			
+			var video = "02";
+			
+			$("video").find("source#mp4").attr("src", "video." + video + ".mp4");
+			$("video").find("source#webm").attr("src", "video." + video + ".webm");
+			$("video").find("source#ogv").attr("src", "video." + video + ".ogv");
 			
 			$("video").get(0).load();
 		});
@@ -29,8 +34,8 @@ if(Meteor.isClient)
 	{
 		"click .video-asset": function()
 		{
-			var filehandle = this.filehandle;
-			Session.set("filehandle", filehandle);
+			var my_cursor_id = Session.get("my cursor id");
+			Cursors.update(my_cursor_id, {$set: {video: this.filehandle}});
 		}
 	}
 }
@@ -42,5 +47,7 @@ if(Meteor.isServer)
 		Videos.remove({});
 		Videos.insert({filehandle: "01"});
 		Videos.insert({filehandle: "02"});
+		
+		Cursors.remove({});
 	});
 }
