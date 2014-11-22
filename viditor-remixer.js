@@ -4,6 +4,8 @@ Cursors = new Meteor.Collection("cursors");
 
 if(Meteor.isClient)
 {
+	music = new Audio("assets/music.01.mp3");
+	
 	Meteor.startup(function()
 	{
 		var cursor_id = Cursors.insert({});
@@ -39,6 +41,21 @@ if(Meteor.isClient)
 					var video = my_cursor.video;
 					var next_video = EditableVideos.findOne({index: {$gt: video.index}}, {sort: {index: 0}});
 					Cursors.update(my_cursor_id, {$set: {video: next_video || null}});
+				}
+			});
+			
+			$("video").on("play", function(event)
+			{
+				var my_cursor_id = Session.get("my cursor id");
+				var my_cursor = Cursors.findOne(my_cursor_id);
+				
+				if(my_cursor && my_cursor.video)
+				{
+					music.play();
+				}
+				else
+				{
+					music.pause();
 				}
 			});
 		});
@@ -102,7 +119,8 @@ if(Meteor.isClient)
 			var my_cursor_id = Session.get("my cursor id");
 			Cursors.update(my_cursor_id, {$set: {video: this}});
 			
-			console.log(this.index);
+			console.log($(event.target).index() * 5);
+			music.currentTime = $(event.target).index() * 5;
 		},
 		
 		"dblclick .editable-video": function(event)
@@ -126,6 +144,15 @@ if(Meteor.isClient)
 			Cursors.update(my_cursor_id, {$set: {video: null}});
 		}
 	}
+	
+	Template.view.events = 
+	{
+		"click video": function(event)
+		{
+			var my_cursor_id = Session.get("my cursor id");
+			Cursors.update(my_cursor_id, {$set: {video: null}});
+		}
+	}
 }
 
 if(Meteor.isServer)
@@ -143,7 +170,7 @@ if(Meteor.isServer)
 		EditableVideos.remove({});
 		EditableVideos.insert({handle: "01", index: Date.now()});
 		EditableVideos.insert({handle: "02", index: Date.now()+1});
-		EditableVideos.insert({handle: "02", index: Date.now()+2});
+		EditableVideos.insert({handle: "03", index: Date.now()+2});
 		
 		Cursors.remove({});
 	});

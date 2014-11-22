@@ -25,10 +25,8 @@ body
 	position: fixed;
 	overflow-y: scroll;
 	
-	/*
 	color: #FFF;
 	background-color: #222;
-	*/
 }
 
 #insert > .info
@@ -36,8 +34,8 @@ body
 	display: block;
 	padding-top: 0.75rem;
 	
-	color: #0A9BDE;
-	color: orange;
+	/*color: #0A9BDE;
+	color: orange;*/
 	text-align: center;
 }
 
@@ -85,6 +83,8 @@ body
 	bottom: 0px;
 	margin: auto;
 	position: absolute;
+	
+	cursor: pointer;
 }
 
 #edit
@@ -113,7 +113,6 @@ body
 	display: inline-block;
 	
 	cursor: pointer;
-	border-radius: 0.2rem;
 	background-color: #222;
 	background-size: cover;
 	background-position: center;
