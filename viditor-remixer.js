@@ -1,14 +1,14 @@
 InsertableVideos = new Meteor.Collection("insertable-videos");
 EditableVideos = new Meteor.Collection("editable-videos");
-Cursors = new Meteor.Collection("cursors");
+Cursors = new Meteor.Collection("cursors");	
 
 if(Meteor.isClient)
 {
 	music = new Audio("assets/music.01.mp3");
-	colors = ["#0A9BDE", "orange"];
 	
 	Meteor.startup(function()
 	{
+		var colors = ["#0A9BDE", "orange"];
 		var cursor_id = Cursors.insert({color: colors[Math.floor(Math.random()*colors.length)]});
 		Session.set("my cursor id", cursor_id);
 		
@@ -155,12 +155,73 @@ if(Meteor.isClient)
 		}
 	}
 	
+	Template.view.effect = function()
+	{
+		var my_cursor_id = Session.get("my cursor id");
+		var my_cursor = Cursors.findOne(my_cursor_id);
+		
+		if(my_cursor && my_cursor.video)
+		{
+			var video = EditableVideos.findOne(my_cursor.video._id);
+			
+			if(video.effect)
+			{
+				var effect = video.effect;
+				console.log(effect);
+				
+				if(effect == "sepia")
+				{
+					return "-webkit-filter: sepia(100%);";
+				}
+				else if(effect == "invert")
+				{
+					return "-webkit-filter: invert(100%);";
+				}
+				else if(effect == "tint")
+				{
+					return "-webkit-filter: hue-rotate(90deg);";
+				}
+				else if(effect == "grayscale")
+				{
+					return "-webkit-filter: grayscale(1);";
+				}
+				else if(effect == "blur")
+				{
+					return "-webkit-filter: blur(3px);";
+				}
+				else if(effect == "none")
+				{
+					return "";
+				}
+			}
+		}
+		
+		return "";
+	}
+	
 	Template.view.events = 
 	{
 		"click video": function(event)
 		{
 			var my_cursor_id = Session.get("my cursor id");
 			Cursors.update(my_cursor_id, {$set: {video: null}});
+		}
+	}
+	
+	Template.tweak.events =
+	{
+		"click": function(event)
+		{
+			var new_effect = $(event.target).attr("id");
+			
+			var my_cursor_id = Session.get("my cursor id");
+			var my_cursor = Cursors.findOne(my_cursor_id);
+			
+			if(my_cursor && my_cursor.video)
+			{
+				var video = my_cursor.video;
+				EditableVideos.update(video._id, {$set: {effect: new_effect}})
+			}
 		}
 	}
 }

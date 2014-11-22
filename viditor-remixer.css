@@ -29,18 +29,18 @@ body
 	background-color: #222;
 }
 
-#insert > .info
+#insert > .details
 {
 	display: block;
 	padding-top: 0.75rem;
 	
-	/*color: #0A9BDE;
-	color: orange;*/
 	text-align: center;
 }
 
-#insert > .info > b
+#insert > .details > b
 {
+	display: block;
+	
 	font-size: 2rem;
 	font-weight: bold;
 }
@@ -116,4 +116,56 @@ body
 	background-color: #222;
 	background-size: cover;
 	background-position: center;
+}
+
+#tweak
+{
+	top: 0rem;
+	left: 0rem;
+	width: 12rem;
+	bottom: 8rem;
+	position: fixed;
+	overflow: hidden;
+	
+	color: #FFF;
+	background-color: #222;
+}
+
+#tweak > .details
+{
+	display: block;
+	padding-top: 0.75rem;
+	
+	text-align: center;
+}
+
+#tweak > .details > b
+{
+	display: block;
+	
+	font-size: 2rem;
+	font-weight: bold;
+}
+
+
+
+#tweak > .list
+{
+	overflow: auto;
+	padding: 0rem 0.75rem;
+}
+
+#tweak > .list > .effect
+{
+	display: block;
+	padding: 0.25rem;
+	margin: 0.75rem 0rem;
+	
+	cursor: pointer;
+	border-radius: 0.2rem;
+}
+
+#tweak > .list > .effect:hover
+{
+	background-color: orange;
 }

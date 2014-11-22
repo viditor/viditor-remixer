@@ -4,6 +4,7 @@
 </head>
 
 <body>
+	{{> tweak}}
 	{{> insert}}
 	{{> view}}
 	{{> edit}}
@@ -11,7 +12,7 @@
 
 <template name="insert">
 	<section id="insert">
-		<div class="info">
+		<div class="details">
 			<b>Videos!</b>
 			<small>doubleclick to insert!</small>
 		</div>
@@ -25,7 +26,7 @@
 
 <template name="view">
 	<section id="view">
-		<video autoplay>
+		<video autoplay style="{{effect}}">
 			<source id="mp4" src="" type="video/mp4; codecs=avc1.42E01E,mp4a.40.2">
 			<source id="webm" type="video/webm; codecs=vp8,vorbis">
 			<source id="ogv" type="video/ogg; codecs=theora,vorbis">
@@ -39,6 +40,23 @@
 			{{#each videos}}
 				<div class="editable-video" style="{{thumbnail}} {{outline}}"></div>
 			{{/each}}
+		</div>
+	</section>
+</template>
+
+<template name="tweak">
+	<section id="tweak">
+		<div class="details">
+			<b>Effects!</b>
+			<small>click to apply!</small>
+		</div>
+		<div class="list">
+			<div id="invert" class="effect" >Invert</div>
+			<div id="grayscale" class="effect">Grayscale</div>
+			<div id="sepia" class="effect">Sepia</div>
+			<div id="blur" class="effect">Blur</div>
+			<div id="tint" class="effect">Tint</div>
+			<div id="none" class="effect">None</div>
 		</div>
 	</section>
 </template>
