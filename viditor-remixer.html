@@ -12,7 +12,9 @@
 	<section id="assets">
 		<b>Assets!</b>
 		<div id="list">
-			<img src="video.01.png"/>
+			{{#each videos}}
+				<img class="video-asset" src="video.{{filehandle}}.png"/>
+			{{/each}}
 		</div>
 	</section>
 </template>

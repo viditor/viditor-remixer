@@ -49,12 +49,13 @@ html
 	padding: 0rem 0.75rem;
 }
 
-#assets > #list > img
+#assets > #list > .video-asset
 {
 	width: 100%;
 	display: block;
 	margin: 0.75rem 0rem;
 	
+	cursor: pointer;
 	border-radius: 0.5rem;
 }
 
