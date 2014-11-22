@@ -40,10 +40,6 @@ if(Meteor.isClient)
 					var next_video = EditableVideos.findOne({index: next_index});
 					Cursors.update(my_cursor_id, {$set: {video: next_video || null}});
 				}
-				else
-				{
-					console.log("null")
-				}
 			});
 		});
 	});
@@ -76,7 +72,23 @@ if(Meteor.isClient)
 	Template.edit.thumbnail = function()
 	{
 		var handle = this.handle;
-		return "background-image: url('assets/video." + handle + ".png')";
+		return "background-image: url('assets/video." + handle + ".png');";
+	}
+	
+	Template.edit.outline = function()
+	{
+		var my_cursor_id = Session.get("my cursor id");
+		var my_cursor = Cursors.findOne(my_cursor_id);
+		
+		if(my_cursor && my_cursor.video)
+		{
+			if(my_cursor.video._id == this._id)
+			{
+				return "outline: 0.2rem solid #0A9BDE;";
+			}
+		}
+		
+		return "outline: none;";
 	}
 	
 	Template.edit.events =
