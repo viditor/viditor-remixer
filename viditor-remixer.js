@@ -5,10 +5,11 @@ Cursors = new Meteor.Collection("cursors");
 if(Meteor.isClient)
 {
 	music = new Audio("assets/music.01.mp3");
+	colors = ["#0A9BDE", "orange"];
 	
 	Meteor.startup(function()
 	{
-		var cursor_id = Cursors.insert({});
+		var cursor_id = Cursors.insert({color: colors[Math.floor(Math.random()*colors.length)]});
 		Session.set("my cursor id", cursor_id);
 		
 		Deps.autorun(function()
@@ -58,6 +59,12 @@ if(Meteor.isClient)
 					music.pause();
 				}
 			});
+			
+			$(window).on("beforeunload", function(event)
+			{
+				var my_cursor_id = Session.get("my cursor id");
+				Cursors.remove(my_cursor_id);
+			});
 		});
 	});
 	
@@ -96,18 +103,21 @@ if(Meteor.isClient)
 	
 	Template.edit.outline = function()
 	{
-		var my_cursor_id = Session.get("my cursor id");
-		var my_cursor = Cursors.findOne(my_cursor_id);
+		var outline = "none";
 		
-		if(my_cursor && my_cursor.video)
+		Cursors.find({}).forEach(function(cursor)
 		{
-			if(my_cursor.video._id == this._id)
+			if(cursor.video)
 			{
-				return "outline: 0.2rem solid #0A9BDE;";
+				if(cursor.video._id == this._id)
+				{
+					outline = "0.25rem solid " + cursor.color;
+				}
 			}
 		}
+		.bind(this));
 		
-		return "outline: none;";
+		return "outline: " + outline + ";";
 	}
 	
 	Template.edit.events =
