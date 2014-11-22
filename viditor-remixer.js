@@ -14,18 +14,37 @@ if(Meteor.isClient)
 			var my_cursor_id = Session.get("my cursor id");
 			var my_cursor = Cursors.findOne(my_cursor_id);
 			
-			var video = "assets/video.blank";
+			var handle = "assets/video." + "blank";
 			
-			if(my_cursor.video)
+			if(my_cursor && my_cursor.video)
 			{
-				video = "assets/video." + my_cursor.video;
+				handle = "assets/video." + my_cursor.video.handle;
 			}
 			
-			$("video").find("source#mp4").attr("src", video + ".mp4");
-			$("video").find("source#webm").attr("src", video + ".webm");
-			$("video").find("source#ogv").attr("src", video + ".ogv");
-			
+			$("video").find("source#mp4").attr("src", handle + ".mp4");
+			$("video").find("source#webm").attr("src", handle + ".webm");
+			$("video").find("source#ogv").attr("src", handle + ".ogv");
 			$("video").get(0).load();
+		});
+		
+		$(document).ready(function()
+		{
+			$("video").on("ended", function()
+			{
+				var my_cursor_id = Session.get("my cursor id");
+				var my_cursor = Cursors.findOne(my_cursor_id);
+				
+				if(my_cursor && my_cursor.video)
+				{
+					var next_index = my_cursor.video.index + 1;
+					var next_video = EditableVideos.findOne({index: next_index});
+					Cursors.update(my_cursor_id, {$set: {video: next_video || null}});
+				}
+				else
+				{
+					console.log("null")
+				}
+			});
 		});
 	});
 	
@@ -36,8 +55,8 @@ if(Meteor.isClient)
 	
 	Template.insert.thumbnail = function()
 	{
-		var filehandle = this.filehandle;
-		return "assets/video." + filehandle + ".png";
+		var handle = this.handle;
+		return "assets/video." + handle + ".png";
 	}
 	
 	Template.insert.events =
@@ -45,7 +64,7 @@ if(Meteor.isClient)
 		"click .insertable-video": function(event)
 		{
 			var my_cursor_id = Session.get("my cursor id");
-			Cursors.update(my_cursor_id, {$set: {video: this.filehandle}});
+			Cursors.update(my_cursor_id, {$set: {video: this}});
 		}
 	}
 	
@@ -56,8 +75,8 @@ if(Meteor.isClient)
 	
 	Template.edit.thumbnail = function()
 	{
-		var filehandle = this.filehandle;
-		return "url('assets/video." + filehandle + ".png')";
+		var handle = this.handle;
+		return "background-image: url('assets/video." + handle + ".png')";
 	}
 	
 	Template.edit.events =
@@ -67,7 +86,7 @@ if(Meteor.isClient)
 			event.stopPropagation();
 			
 			var my_cursor_id = Session.get("my cursor id");
-			Cursors.update(my_cursor_id, {$set: {video: this.filehandle}});
+			Cursors.update(my_cursor_id, {$set: {video: this}});
 		},
 		
 		"click .track": function(event)
@@ -83,12 +102,12 @@ if(Meteor.isServer)
 	Meteor.startup(function()
 	{
 		InsertableVideos.remove({});
-		InsertableVideos.insert({filehandle: "01"});
-		InsertableVideos.insert({filehandle: "02"});
+		InsertableVideos.insert({handle: "01"});
+		InsertableVideos.insert({handle: "02"});
 		
 		EditableVideos.remove({});
-		EditableVideos.insert({filehandle: "01"});
-		EditableVideos.insert({filehandle: "02"});
+		EditableVideos.insert({handle: "01", index: 0});
+		EditableVideos.insert({handle: "02", index: 1});
 		
 		Cursors.remove({});
 	});

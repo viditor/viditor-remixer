@@ -22,8 +22,8 @@
 
 <template name="view">
 	<section id="view">
-		<video controls>
-			<source id="mp4" type="video/mp4; codecs=avc1.42E01E,mp4a.40.2">
+		<video controls autoplay>
+			<source id="mp4" src="" type="video/mp4; codecs=avc1.42E01E,mp4a.40.2">
 			<source id="webm" type="video/webm; codecs=vp8,vorbis">
 			<source id="ogv" type="video/ogg; codecs=theora,vorbis">
 		</video>
@@ -34,7 +34,7 @@
 	<section id="edit">
 		<div class="track">
 			{{#each videos}}
-				<div class="editable-video" style="background-image: {{thumbnail}};"></div>
+				<div class="editable-video" style="{{thumbnail}};"></div>
 			{{/each}}
 		</div>
 	</section>
