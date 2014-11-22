@@ -135,6 +135,10 @@ if(Meteor.isServer)
 		InsertableVideos.remove({});
 		InsertableVideos.insert({handle: "01"});
 		InsertableVideos.insert({handle: "02"});
+		InsertableVideos.insert({handle: "03"});
+		InsertableVideos.insert({handle: "04"});
+		InsertableVideos.insert({handle: "05"});
+		InsertableVideos.insert({handle: "06"});
 		
 		EditableVideos.remove({});
 		EditableVideos.insert({handle: "01", index: Date.now()});
