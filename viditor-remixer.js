@@ -34,6 +34,12 @@ if(Meteor.isClient)
 		return InsertableVideos.find({});
 	}
 	
+	Template.insert.thumbnail = function()
+	{
+		var filehandle = this.filehandle;
+		return "assets/video." + filehandle + ".png";
+	}
+	
 	Template.insert.events =
 	{
 		"click .insertable-video": function(event)
@@ -51,7 +57,7 @@ if(Meteor.isClient)
 	Template.edit.thumbnail = function()
 	{
 		var filehandle = this.filehandle;
-		return "background-image: url(video." + filehandle + ".png);"
+		return "url('assets/video." + filehandle + ".png')";
 	}
 	
 	Template.edit.events =

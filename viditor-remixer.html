@@ -14,7 +14,7 @@
 		<b>Videos!</b>
 		<div id="list">
 			{{#each videos}}
-				<img class="insertable-video" src="video.{{filehandle}}.png"/>
+				<img class="insertable-video" src="{{thumbnail}}"/>
 			{{/each}}
 		</div>
 	</section>
@@ -34,7 +34,7 @@
 	<section id="edit">
 		<div class="track">
 			{{#each videos}}
-				<div class="editable-video" style="{{thumbnail}}"></div>
+				<div class="editable-video" style="background-image: {{thumbnail}};"></div>
 			{{/each}}
 		</div>
 	</section>
